@@ -17,7 +17,7 @@ import com.zv.geochat.notification.NotificationDecorator;
 import com.zv.geochat.provider.ChatMessageStore;
 
 public class ChatService extends Service {
-    private static final String TAG = "ChatService";
+    private static final String TAG = "myApp:ChatService";
 
     public static final String CMD = "msg_cmd";
     public static final int CMD_JOIN_CHAT = 10;
@@ -32,6 +32,9 @@ public class ChatService extends Service {
     private ChatMessageStore chatMessageStore;
 
     private String myName;
+    private String myChatSessionMessageCounter;
+    private int currentSessionMessageCount = 0;
+
 
     public ChatService() {
     }
@@ -44,6 +47,7 @@ public class ChatService extends Service {
         notificationDecorator = new NotificationDecorator(this, notificationMgr);
         chatMessageStore = new ChatMessageStore(this);
         loadUserNameFromPreferences();
+        loadChatSessionMessageCounterFromPreferences();
 
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
@@ -106,6 +110,10 @@ public class ChatService extends Service {
             notificationDecorator.displayExpandableNotification("Sending message...", messageText);
             chatMessageStore.insert(new ChatMessage(myName, messageText));
             sendBroadcastNewMessage(myName, messageText);
+
+            currentSessionMessageCount = currentSessionMessageCount + 1;
+            String count = myChatSessionMessageCounter;
+
         } else if (command == CMD_RECEIVE_MESSAGE) {
             String testUser = "Test User";
             String testMessage = "Simulated Message";
@@ -120,6 +128,11 @@ public class ChatService extends Service {
     private void loadUserNameFromPreferences() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         myName = prefs.getString(Constants.PREF_KEY_USER_NAME, "Default Name");
+    }
+
+    private void loadChatSessionMessageCounterFromPreferences() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        myChatSessionMessageCounter = prefs.getString(Constants.PREF_KEY_SESSION_MESSAGE_COUNTER, "Default Timer");
     }
 
 
