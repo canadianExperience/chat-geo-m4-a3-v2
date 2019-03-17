@@ -10,6 +10,7 @@
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
+    <string name="pref_header_session_message_counter">Chat Session Message Counter</string>
 
     <string name="pref_title_user_name">User Name</string>
     <string name="pref_default_user_name">John Smith</string>

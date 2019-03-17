@@ -12,4 +12,9 @@
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/pref_header_notifications" />
 
+    <header
+        android:fragment="com.zv.geochat.SettingsActivity$SessionMessageCounterPreferenceFragment"
+        android:icon="@drawable/ic_message_black_24dp"
+        android:title="@string/pref_header_session_message_counter" />
+
 </preference-headers>

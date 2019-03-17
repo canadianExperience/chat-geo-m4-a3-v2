@@ -8,6 +8,7 @@ public interface Constants {
     String PREF_KEY_NOTIFICATIONS_NEW_MESSAGE ="key_notifications_new_message";
     String PREF_KEY_NOTIFICATIONS_NEW_MESSAGE_RINGTONE ="key_notifications_new_message_ringtone";
     String PREF_KEY_NOTIFICATIONS_NEW_MESSAGE_VIBRATE ="key_notifications_new_message_vibrate";
+    String PREF_KEY_SESSION_MESSAGE_COUNTER ="key_chat_session_message_counter";
 
     // broadcasts
     String BASE = "com.zv.geochat.";

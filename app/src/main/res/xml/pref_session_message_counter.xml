@@ -1,0 +1,11 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:title="Set Session Message Counter"
+        android:summary="Select a number of messages"
+        android:key="key_chat_session_message_counter"
+        android:defaultValue="2"
+        android:entries="@array/sessionMessageCounterArray"
+        android:entryValues="@array/sessionMessageCounterValues" />
+
+</PreferenceScreen>
