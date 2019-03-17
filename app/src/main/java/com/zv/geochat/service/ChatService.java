@@ -111,8 +111,12 @@ public class ChatService extends Service {
             chatMessageStore.insert(new ChatMessage(myName, messageText));
             sendBroadcastNewMessage(myName, messageText);
 
-            currentSessionMessageCount = currentSessionMessageCount + 1;
-            String count = myChatSessionMessageCounter;
+            currentSessionMessageCount += 1;
+            if(currentSessionMessageCount == Integer.valueOf(myChatSessionMessageCounter)){
+                sendBroadcastSessionClosed(myChatSessionMessageCounter);
+                sendBroadcastNotConnected();
+                stopSelf();
+            }
 
         } else if (command == CMD_RECEIVE_MESSAGE) {
             String testUser = "Test User";
@@ -195,6 +199,16 @@ public class ChatService extends Service {
         Log.d(TAG, "->(+)<- sending broadcast: BROADCAST_USER_TYPING");
         Intent intent = new Intent();
         intent.setAction(Constants.BROADCAST_USER_TYPING);
+        sendBroadcast(intent);
+    }
+
+    private void sendBroadcastSessionClosed(String myChatSessionMessageCounter) {
+        Log.d(TAG, "->(+)<- sending broadcast: BROADCAST_USER_SESSION_CLOSED");
+        Intent intent = new Intent();
+        String sessionMessage = "Session closed after reaching the limit: " + myChatSessionMessageCounter + " messages";
+        intent.putExtra("sessionClosed", sessionMessage);
+        intent.setAction(Constants.BROADCAST_USER_SESSION_CLOSED);
+
         sendBroadcast(intent);
     }
 }
